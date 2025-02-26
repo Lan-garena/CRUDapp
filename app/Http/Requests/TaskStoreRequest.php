@@ -17,9 +17,9 @@ class TaskStoreRequest extends FormRequest
     {
         return [
             'title' => 'string|required|min:3|max:255',
-            'description' => 'string',
+            'description' => 'string|nullable',
             'status' => [Rule::enum(TaskStatus::class)],
-            'due_date' => 'date|date_format:Y-m-d|after:today',
+            'due_date' => 'nullable|date|after:today',
         ];
     }
 }

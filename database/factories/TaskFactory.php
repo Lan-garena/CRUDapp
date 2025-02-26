@@ -14,6 +14,7 @@ class TaskFactory extends Factory
             'title' => fake()->text(10),
             'description' => fake()->text(),
             'due_date' => fake()->date(),
+            'status' => 'completed',
         ];
     }
 }
