@@ -24,11 +24,11 @@ class TaskTest extends TestCase
     public function test_validation_on_create_task()
     {
         $response = $this->postJson('/api/tasks', [
-            'title' => '',
+            'title' => null,
             'status' => 'invalid_status',
         ]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(422)->assertJsonValidationErrors(['title', 'status']);
     }
 
     public function test_delete_task()

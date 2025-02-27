@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enum\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 class TaskFactory extends Factory
 {
@@ -14,7 +14,7 @@ class TaskFactory extends Factory
             'title' => fake()->text(10),
             'description' => fake()->text(),
             'due_date' => fake()->date(),
-            'status' => 'completed',
+            'status' => $this->faker->randomElement(TaskStatus::cases())->value,
         ];
     }
 }

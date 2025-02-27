@@ -7,12 +7,13 @@ use App\Http\Requests\TaskStoreRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Task::query();
 
@@ -29,26 +30,26 @@ class TaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
-    public function store(TaskStoreRequest $request)
+    public function store(TaskStoreRequest $request): TaskResource
     {
         $created_task = Task::create($request->validated());
 
         return new TaskResource($created_task);
     }
 
-    public function show(Task $task)
+    public function show(Task $task): TaskResource
     {
         return new TaskResource($task);
     }
 
-    public function update(TaskStoreRequest $request,Task $task)
+    public function update(TaskStoreRequest $request,Task $task): TaskResource
     {
         $task->update($request->validated());
 
         return new TaskResource($task);
     }
 
-    public function destroy(Task $task)
+    public function destroy(Task $task): Response
     {
         $task->delete();
 
