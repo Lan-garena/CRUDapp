@@ -67,6 +67,19 @@ class TaskTest extends TestCase
             ->assertJsonValidationErrors(['title', 'status']);
     }
 
+    public function test_update_non_existing_task()
+    {
+        $response = $this->put('/api/tasks/1', [
+            'title' => 'Updated Task',
+            'description' => 'Updated Description',
+        ]);
+
+        $response->assertStatus(404)
+            ->assertJsonFragment([
+                'message' => 'Task not found',
+            ]);
+    }
+
     public function test_get_tasks_with_status_filter()
     {
         Task::factory()->create(['status' => TaskStatus::PENDING->value]);
@@ -86,6 +99,16 @@ class TaskTest extends TestCase
         $response = $this->deleteJson('/api/tasks/'.$task->id);
 
         $response->assertStatus(204);
+    }
+
+    public function test_delete_non_existing_task()
+    {
+        $response = $this->deleteJson('/api/tasks/1');
+
+        $response->assertStatus(404)
+            ->assertJsonFragment([
+                'message' => 'Task not found',
+            ]);
     }
 }
 
